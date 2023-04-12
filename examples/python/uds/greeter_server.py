@@ -32,7 +32,7 @@ class Greeter(helloworld_pb2_grpc.GreeterServicer):
         return helloworld_pb2.HelloReply(message=f'Hello again, {request.name}!')
 
     def DataProvider(self, request, context):
-        return helloworld_pb2.Data(data_id=request.project_id + datetime.today().strftime('%Y-%m-%d'),
+        return helloworld_pb2.Data(data_id=request.project_id + datetime.now(),
                                    data_elements=random.sample(range(100), 10))
 
 

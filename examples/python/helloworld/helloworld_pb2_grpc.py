@@ -7,7 +7,6 @@ import helloworld_pb2 as helloworld__pb2
 
 class GreeterStub(object):
     """The greeting service definition.
-    The greeting service definition.
     """
 
     def __init__(self, channel):
@@ -35,7 +34,6 @@ class GreeterStub(object):
 
 class GreeterServicer(object):
     """The greeting service definition.
-    The greeting service definition.
     """
 
     def SayHello(self, request, context):
@@ -86,7 +84,6 @@ def add_GreeterServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class Greeter(object):
     """The greeting service definition.
-    The greeting service definition.
     """
 
     @staticmethod

@@ -1,4 +1,4 @@
-# Copyright 2015 gRPC authors.
+# Copyright 2022 The gRPC Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""The Python implementation of the GRPC helloworld.Greeter client."""
+"""The gRPC Python client for the UDS example."""
 
 from __future__ import print_function
 
@@ -23,16 +23,16 @@ import helloworld_pb2_grpc
 
 
 def run():
-    # NOTE(gRPC Python Team): .close() is possible on a channel and should be
-    # used in circumstances in which the with statement does not fit the needs
-    # of the code.
-    print("Will try to greet world ...")
     with grpc.insecure_channel('localhost:50051') as channel:
         stub = helloworld_pb2_grpc.GreeterStub(channel)
         response = stub.SayHello(helloworld_pb2.HelloRequest(name='you'))
-    print("Greeter client received: " + response.message)
+        print("Greeter client received: " + response.message)
+        response = stub.SayHelloAgain(helloworld_pb2.HelloRequest(name='you'))
+        print("Greeter client received: " + response.message)
+        response = stub.DataProvider(helloworld_pb2.ExperimentDetails(project_id='1234'))
+        print("Data ID: " + response.data_id + ", Data Elements: " + response.data_elements)
 
 
 if __name__ == '__main__':
-    logging.basicConfig()
+    logging.basicConfig(level=logging.INFO)
     run()

@@ -29,7 +29,7 @@ def run():
         print("Greeter client received: " + response.message)
         response = stub.SayHelloAgain(helloworld_pb2.HelloRequest(name='you'))
         print("Greeter client received: " + response.message)
-        response = stub.DataProvider(helloworld_pb2.ExperimentDetails(project_id=3))
+        response = stub.DataProvider(helloworld_pb2.ExperimentDetails(project_id='1234'))
         print("Data ID: " + response.data_id + ", Data Elements: " + response.data_elements)
 
 
