@@ -7,6 +7,7 @@ import helloworld_pb2 as helloworld__pb2
 
 class GreeterStub(object):
     """The greeting service definition.
+    The greeting service definition.
     """
 
     def __init__(self, channel):
@@ -20,14 +21,39 @@ class GreeterStub(object):
                 request_serializer=helloworld__pb2.HelloRequest.SerializeToString,
                 response_deserializer=helloworld__pb2.HelloReply.FromString,
                 )
+        self.SayHelloAgain = channel.unary_unary(
+                '/helloworld.Greeter/SayHelloAgain',
+                request_serializer=helloworld__pb2.HelloRequest.SerializeToString,
+                response_deserializer=helloworld__pb2.HelloReply.FromString,
+                )
+        self.DataProvider = channel.unary_unary(
+                '/helloworld.Greeter/DataProvider',
+                request_serializer=helloworld__pb2.ExperimentDetails.SerializeToString,
+                response_deserializer=helloworld__pb2.Data.FromString,
+                )
 
 
 class GreeterServicer(object):
     """The greeting service definition.
+    The greeting service definition.
     """
 
     def SayHello(self, request, context):
         """Sends a greeting
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SayHelloAgain(self, request, context):
+        """Sends another greeting
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DataProvider(self, request, context):
+        """Added for HW 8
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -41,6 +67,16 @@ def add_GreeterServicer_to_server(servicer, server):
                     request_deserializer=helloworld__pb2.HelloRequest.FromString,
                     response_serializer=helloworld__pb2.HelloReply.SerializeToString,
             ),
+            'SayHelloAgain': grpc.unary_unary_rpc_method_handler(
+                    servicer.SayHelloAgain,
+                    request_deserializer=helloworld__pb2.HelloRequest.FromString,
+                    response_serializer=helloworld__pb2.HelloReply.SerializeToString,
+            ),
+            'DataProvider': grpc.unary_unary_rpc_method_handler(
+                    servicer.DataProvider,
+                    request_deserializer=helloworld__pb2.ExperimentDetails.FromString,
+                    response_serializer=helloworld__pb2.Data.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'helloworld.Greeter', rpc_method_handlers)
@@ -50,6 +86,7 @@ def add_GreeterServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class Greeter(object):
     """The greeting service definition.
+    The greeting service definition.
     """
 
     @staticmethod
@@ -66,5 +103,39 @@ class Greeter(object):
         return grpc.experimental.unary_unary(request, target, '/helloworld.Greeter/SayHello',
             helloworld__pb2.HelloRequest.SerializeToString,
             helloworld__pb2.HelloReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SayHelloAgain(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/helloworld.Greeter/SayHelloAgain',
+            helloworld__pb2.HelloRequest.SerializeToString,
+            helloworld__pb2.HelloReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DataProvider(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/helloworld.Greeter/DataProvider',
+            helloworld__pb2.ExperimentDetails.SerializeToString,
+            helloworld__pb2.Data.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

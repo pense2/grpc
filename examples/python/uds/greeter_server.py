@@ -19,13 +19,21 @@ import logging
 import grpc
 import helloworld_pb2
 import helloworld_pb2_grpc
+import datetime
+import random
 
 
 class Greeter(helloworld_pb2_grpc.GreeterServicer):
 
     def SayHello(self, request, context):
-        del request
-        return helloworld_pb2.HelloReply(message=f'Hello to {context.peer()}!')
+        return helloworld_pb2.HelloReply(message=f'Hello, {request.name}!')
+
+    def SayHelloAgain(self, request, context):
+        return helloworld_pb2.HelloReply(message=f'Hello again, {request.name}!')
+
+    def DataProvider(self, request, context):
+        return helloworld_pb2.Data(data_id=request.project_id + datetime.today().strftime('%Y-%m-%d'),
+                                   data_elements=random.sample(range(100), 10))
 
 
 def serve():

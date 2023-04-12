@@ -23,12 +23,14 @@ import helloworld_pb2_grpc
 
 
 def run():
-    uds_addresses = ['unix:helloworld.sock', 'unix:///tmp/helloworld.sock']
-    for uds_address in uds_addresses:
-        with grpc.insecure_channel(uds_address) as channel:
-            stub = helloworld_pb2_grpc.GreeterStub(channel)
-            response = stub.SayHello(helloworld_pb2.HelloRequest(name='you'))
-            logging.info('Received: %s', response.message)
+    with grpc.insecure_channel('localhost:50051') as channel:
+        stub = helloworld_pb2_grpc.GreeterStub(channel)
+        response = stub.SayHello(helloworld_pb2.HelloRequest(name='you'))
+        print("Greeter client received: " + response.message)
+        response = stub.SayHelloAgain(helloworld_pb2.HelloRequest(name='you'))
+        print("Greeter client received: " + response.message)
+        response = stub.DataProvider(helloworld_pb2.ExperimentDetails(project_id=3))
+        print("Data ID: " + response.data_id + ", Data Elements: " + response.data_elements)
 
 
 if __name__ == '__main__':
