@@ -1,6 +1,7 @@
+from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Optional as _Optional
+from typing import ClassVar as _ClassVar, Iterable as _Iterable, Optional as _Optional
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -8,9 +9,9 @@ class Data(_message.Message):
     __slots__ = ["data_elements", "data_id"]
     DATA_ELEMENTS_FIELD_NUMBER: _ClassVar[int]
     DATA_ID_FIELD_NUMBER: _ClassVar[int]
-    data_elements: str
+    data_elements: _containers.RepeatedScalarFieldContainer[int]
     data_id: str
-    def __init__(self, data_id: _Optional[str] = ..., data_elements: _Optional[str] = ...) -> None: ...
+    def __init__(self, data_id: _Optional[str] = ..., data_elements: _Optional[_Iterable[int]] = ...) -> None: ...
 
 class ExperimentDetails(_message.Message):
     __slots__ = ["project_id"]

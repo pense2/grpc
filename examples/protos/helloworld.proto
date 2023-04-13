@@ -47,5 +47,5 @@ message ExperimentDetails {
 
 message Data {
   string data_id = 3;
-  string data_elements = 4;
+  repeated int32 data_elements = 4;
 }

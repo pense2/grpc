@@ -19,7 +19,7 @@ import logging
 import grpc
 import helloworld_pb2
 import helloworld_pb2_grpc
-import datetime
+from datetime import datetime
 import random
 
 
@@ -32,18 +32,17 @@ class Greeter(helloworld_pb2_grpc.GreeterServicer):
         return helloworld_pb2.HelloReply(message=f'Hello again, {request.name}!')
 
     def DataProvider(self, request, context):
-        return helloworld_pb2.Data(data_id=request.project_id + datetime.now(),
+        return helloworld_pb2.Data(data_id=request.project_id + " " + str(datetime.now()),
                                    data_elements=random.sample(range(100), 10))
 
 
 def serve():
-    uds_addresses = ['unix:helloworld.sock', 'unix:///tmp/helloworld.sock']
+    port = '50051'
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     helloworld_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
-    for uds_address in uds_addresses:
-        server.add_insecure_port(uds_address)
-        logging.info('Server listening on: %s', uds_address)
+    server.add_insecure_port('[::]:' + port)
     server.start()
+    print("Server started, listening on " + port)
     server.wait_for_termination()
 
 
